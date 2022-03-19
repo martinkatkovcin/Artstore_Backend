@@ -5,6 +5,7 @@ from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
 import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 
 def tokenCreation():
     """
@@ -14,7 +15,7 @@ def tokenCreation():
 
 def tokenIn(token):
     """
-    ...
+    Token exist or not
     """
     try:
         _token = Users.objects.filter(token = token)
@@ -156,5 +157,35 @@ def loginUser(request):
         return JsonResponse({"token" : user.token, 
                             "username" : user.username, 
                             "password" : user.password}, status = 200, safe = False)
+    else:
+        return HttpResponse(status = 404)
+    
+
+@csrf_exempt
+def getInfoUser(request):
+    """
+    Info user
+    """
+    id_user = request.GET.get('id', None)
+    response = {}
+
+    try:
+        user = Users.objects.get(id = id_user)
+    except Users.DoesNotExist:
+        user = None
+
+    if user:
+        _user = {"firstName" : user.firstName,
+                "lastName" : user.lastName,
+                "username" : user.username,
+                "password" : user.password,
+                "email" : user.email,
+                "phoneNumber" : user.phoneNumber,
+                "token" : user.token}
+        
+        response.update(_user)
+        print(response)
+        return JsonResponse(response, status = 200, safe = False)
+    
     else:
         return HttpResponse(status = 404)
