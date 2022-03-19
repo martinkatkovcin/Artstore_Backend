@@ -1,0 +1,25 @@
+2022-03-17 23:11:55.276 CET [97474] LOG:  starting PostgreSQL 13.6 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2022-03-17 23:11:55.278 CET [97474] LOG:  listening on IPv6 address "::1", port 5444
+2022-03-17 23:11:55.278 CET [97474] LOG:  listening on IPv4 address "127.0.0.1", port 5444
+2022-03-17 23:11:55.279 CET [97474] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5444"
+2022-03-17 23:11:55.283 CET [97475] LOG:  database system was shut down at 2022-03-17 23:11:55 CET
+2022-03-17 23:11:55.292 CET [97474] LOG:  database system is ready to accept connections
+2022-03-17 23:23:38.446 CET [97730] FATAL:  database "MTAAdb" does not exist
+2022-03-17 23:25:02.994 CET [97763] FATAL:  database "MTAAdb" does not exist
+2022-03-17 23:25:07.292 CET [97774] FATAL:  database "MTAAdb" does not exist
+2022-03-17 23:28:25.050 CET [97954] FATAL:  database "MTAAdb" does not exist
+2022-03-18 00:06:08.719 CET [1538] ERROR:  column "id_productCategory_id" does not exist
+2022-03-18 00:06:08.719 CET [1538] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
+2022-03-18 00:10:51.214 CET [1713] ERROR:  column "id_productCategory_id" does not exist
+2022-03-18 00:10:51.214 CET [1713] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
+2022-03-18 00:16:24.801 CET [1885] ERROR:  column "id_productCategory_id" does not exist
+2022-03-18 00:16:24.801 CET [1885] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
+2022-03-19 13:10:23.690 CET [18267] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
+2022-03-19 13:10:23.690 CET [18267] DETAIL:  Failing row contains (null, , , cigan, pica, , , 0fX0SDmxlVZW7F8g).
+2022-03-19 13:10:23.690 CET [18267] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, '', '', 'cigan', 'pica', '', '', '0fX0SDmxlVZW7F8g')
+2022-03-19 13:12:43.827 CET [18304] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
+2022-03-19 13:12:43.827 CET [18304] DETAIL:  Failing row contains (null, , , cigan, pica, , , idazywc0oD4lE4aL).
+2022-03-19 13:12:43.827 CET [18304] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, '', '', 'cigan', 'pica', '', '', 'idazywc0oD4lE4aL')
+2022-03-19 13:19:53.340 CET [18595] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
+2022-03-19 13:19:53.340 CET [18595] DETAIL:  Failing row contains (null, null, null, cigan, pica, null, null, XFeAgFVAeXPKljvh).
+2022-03-19 13:19:53.340 CET [18595] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, NULL, NULL, 'cigan', 'pica', NULL, NULL, 'XFeAgFVAeXPKljvh')
