@@ -16,4 +16,5 @@ urlpatterns = [
     path('deliverymethod', views.getDeliveryMethod, name = 'getDeliveryMethod'),
     path('productcategories', views.getProductCategories, name = 'getProductCategories'),
     path('productcategory', views.getProductCategory, name = 'getProductCategory'),
+    path('voucher', views.getVoucher, name = 'getVoucher')
 ]

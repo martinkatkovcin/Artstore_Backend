@@ -326,3 +326,33 @@ def getProductCategory(request):
         
     else:
         return HttpResponse(status = 404)
+
+"""
+------------- VOUCHER REQUESTS -----------
+"""
+@csrf_exempt
+def getVoucher(request):
+    """
+    Get voucher
+    """
+    id_voucher = request.GET.get('id', None)
+    response = {}
+    
+    try:
+        voucher = vouchers.objects.get(id = id_voucher)
+    except vouchers.DoesNotExist:
+        voucher = None
+    
+    if voucher:
+        _voucher = {
+            "id" : voucher.id,
+            "code" : voucher.code,
+            "discount" : voucher.discount,
+            "isactive" : voucher.isactive               
+        }
+
+        response.update(_voucher)
+        return JsonResponse(response, status = 200, safe = False)
+        
+    else:
+        return HttpResponse(status = 404)
