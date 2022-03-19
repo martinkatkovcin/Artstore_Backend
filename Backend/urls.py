@@ -16,5 +16,11 @@ urlpatterns = [
     path('deliverymethod', views.getDeliveryMethod, name = 'getDeliveryMethod'),
     path('productcategories', views.getProductCategories, name = 'getProductCategories'),
     path('productcategory', views.getProductCategory, name = 'getProductCategory'),
-    path('voucher', views.getVoucher, name = 'getVoucher')
+    path('voucher', views.getVoucher, name = 'getVoucher'),
+    path('products', views.getProducts, name = 'getProducts'),
+    path('products/category', views.getProductsByCategory, name = 'getProductsByCategory'),
+    path('product', views.getProduct, name = 'getProduct'),
+    path('product/create', views.createProduct, name = 'createProduct'),
+    path('product/update', views.updateProduct, name = 'updateProduct'),
+    path('product/delete', views.deleteProduct, name = 'deleteProduct')
 ]

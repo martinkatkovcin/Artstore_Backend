@@ -1,3 +1,4 @@
+from itertools import product
 from multiprocessing.sharedctypes import Value
 from django.db import connections
 from apiserver.models import *
@@ -354,5 +355,156 @@ def getVoucher(request):
         response.update(_voucher)
         return JsonResponse(response, status = 200, safe = False)
         
+    else:
+        return HttpResponse(status = 404)
+
+"""
+------------- PRODUCTS REQUESTS -----------
+"""
+@csrf_exempt
+def getProducts(request):
+    """
+    Get products
+    """
+    _products  = products.objects.all()
+    arr = []
+
+    for product in _products:
+        arr.append(
+            {"id" : product.id,
+            "title" : product.title,
+            "description" : product.description,
+            "imagepath" : product.imagepath,
+            "price" : product.price,
+            "productcategory" : product.id_productcategory_id
+            }
+        )
+    
+    return JsonResponse(arr, status = 200, safe = False)
+
+@csrf_exempt
+def getProductsByCategory(request):
+    """
+    Get products by category
+    """
+    id_productcategory_id = request.GET.get('id_productcategory_id', None)
+    arr = []
+    
+    try:
+        _products = products.objects.filter(id_productcategory_id = id_productcategory_id)
+    except products.DoesNotExist:
+        _products = None
+    
+    if _products:
+        
+        for product in _products:
+            arr.append(
+            {
+            "id" : product.id,
+            "title" : product.title,
+            "description" : product.description,
+            "imagepath" : product.imagepath,
+            "price" : product.price,
+            "productcategory" : product.id_productcategory_id
+            })
+
+        return JsonResponse(arr, status = 200, safe = False)
+        
+    else:
+        return HttpResponse(status = 204)
+
+
+@csrf_exempt
+def getProduct(request):
+    """
+    Get product by id
+    """
+    id_product = request.GET.get('id', None)
+    response = {}
+    
+    try:
+        product = products.objects.get(id = id_product)
+    except products.DoesNotExist:
+        product = None
+    
+    if product:
+        
+        _product = {
+            "id" : product.id,
+            "title" : product.title,
+            "description" : product.description,
+            "imagepath" : product.imagepath,
+            "price" : product.price,
+            "productcategory" : product.id_productcategory_id
+            }
+        
+        response.update(_product)
+        return JsonResponse(_product, status = 200, safe = False)
+        
+    else:
+        return HttpResponse(status = 204)
+
+@csrf_exempt
+def createProduct(request):
+    """
+    Create product
+    """
+    rbody = json.loads(request.body.decode('utf-8'))
+    required = ['title', 'description', 'imagepath', 'price', 'id_productcategory_id']
+
+    if not checkFilledFields(rbody, required):
+        return HttpResponse(status = 400)
+   
+    try:
+        product = products.objects.filter(title = rbody['title'])
+    except products.DoesNotExist:
+        product = None
+    
+    if product:
+        return HttpResponse(status = 409)
+    else:
+        _product = products(title = rbody['title'], description = rbody['description'],
+                        imagepath = rbody['imagepath'], price = rbody['price'], 
+                        id_productcategory_id = rbody['id_productcategory_id'])
+        _product.save()
+
+    return HttpResponse(status = 201)
+
+@csrf_exempt
+def updateProduct(request):
+    """
+    Update product by id
+    """
+    rbody = json.loads(request.body.decode('utf-8'))
+    id_product = request.GET.get('id', None)
+
+    try:
+        product = products.objects.filter(id = id_product)
+    except products.DoesNotExist:
+        product = None
+
+    if product:
+
+        products.objects.filter(id = id_product).update(**rbody)         
+        return HttpResponse(status = 200)
+
+    else:
+        return HttpResponse(status = 404)
+
+@csrf_exempt
+def deleteProduct(request):
+    """
+    Delete product by id
+    """
+    id_product = request.GET.get('id', None)
+
+    try:
+        product = products.objects.filter(id = id_product)
+    except products.DoesNotExist:
+        product = None
+
+    if product: 
+        products.objects.filter(id = id_product).delete()
+        return HttpResponse(status = 204)
     else:
         return HttpResponse(status = 404)
