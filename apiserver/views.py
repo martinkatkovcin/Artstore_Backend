@@ -91,7 +91,6 @@ def updateUser(request):
     """
     rbody = json.loads(request.body.decode('utf-8'))
     token = request.META.get('HTTP_TOKEN')
-    rbodyvalues = rbody.keys()
 
     if not token:
         return HttpResponse(status = 400)
@@ -112,10 +111,50 @@ def updateUser(request):
         
         Users.objects.filter(token = token).update(**rbody)         
         return HttpResponse(status = 200)
-        
+
     else:
         return HttpResponse(status = 404)
 
 @csrf_exempt
 def deleteUser(request):
-    return
+    """
+    Delete user
+    """
+    token = request.META.get('HTTP_TOKEN')
+
+    if not token: 
+        return HttpResponse(status = 400)
+
+    try:
+        user = Users.objects.filter(token = token)
+    except Users.DoesNotExist:
+        user = None
+
+    if user: 
+        Users.objects.filter(token = token).delete()
+        return HttpResponse(status = 204)
+    else:
+        return HttpResponse(status = 404)
+
+@csrf_exempt
+def loginUser(request):
+    """
+    User login
+    """
+    rbody = json.loads(request.body.decode('utf-8'))
+    required = ['username', 'password']
+
+    if not checkFilledFields(rbody, required):
+        return HttpResponse(status = 400)
+
+    try:
+        user = Users.objects.get(username = rbody['username'], password = rbody['password'])
+    except Users.DoesNotExist:
+        user = None
+    
+    if user:
+        return JsonResponse({"token" : user.token, 
+                            "username" : user.username, 
+                            "password" : user.password}, status = 200, safe = False)
+    else:
+        return HttpResponse(status = 404)

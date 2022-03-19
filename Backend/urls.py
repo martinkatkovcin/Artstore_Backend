@@ -22,5 +22,6 @@ urlpatterns = [
     path('uptime', views.uptime, name = 'uptime'),
     path('users/create', views.createUser, name = 'createUser'),
     path('users/update', views.updateUser, name = 'updateUser'),
-    path('users/delete', views.deleteUser, name = 'deleteUser')
+    path('users/delete', views.deleteUser, name = 'deleteUser'),
+    path('users/login', views.loginUser, name = 'loginuser')
 ]
