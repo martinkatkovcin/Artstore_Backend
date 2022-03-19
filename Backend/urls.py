@@ -20,5 +20,7 @@ from apiserver import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('uptime', views.uptime, name = 'uptime'),
-    path('users', views.createUser, name = 'createUser')
+    path('users/create', views.createUser, name = 'createUser'),
+    path('users/update', views.updateUser, name = 'updateUser'),
+    path('users/delete', views.deleteUser, name = 'deleteUser')
 ]

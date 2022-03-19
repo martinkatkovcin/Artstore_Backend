@@ -1,7 +1,9 @@
+from collections import UserString
+from multiprocessing.sharedctypes import Value
 from django.db import connections
 from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
-import json, random, string
+import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
 
 def tokenCreation():
@@ -15,11 +17,11 @@ def tokenIn(token):
     ...
     """
     try:
-        token_object = Users.objects.filter(token = token)
+        _token = Users.objects.filter(token = token)
     except Users.DoesNotExist:
-        token_object = None
+        _token = None
     
-    if token_object:
+    if _token:
         return True
     else:
         return False
@@ -34,6 +36,17 @@ def checkFilledFields(rbody, required):
     
     return True
 
+def formatEmail(email):
+    """
+    Check if email is in correct format
+    """
+    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+
+    if re.search(regex, email):
+        return True
+    else:
+        return False
+
 def uptime(request):
     """
     Uptime of database (testing request)
@@ -47,33 +60,62 @@ def createUser(request):
     """
     Create user
     """
-    rbody = request.body.decode('utf-8')
-    rbody = json.loads(rbody)
+    rbody = json.loads(request.body.decode('utf-8'))
     required = ['username', 'password']
     token = True
 
     if not checkFilledFields(rbody, required):
         return HttpResponse(status = 400)
+   
+    try:
+        user = Users.objects.filter(username = rbody['username'])
+    except Users.DoesNotExist:
+        user = None
+    
+    if user:
+        return HttpResponse(status = 409)
+    else:
+        while token:
+            random_token = tokenCreation()
+            token = tokenIn(random_token)
 
-    if request.method == 'GET':
-        # tba
-        return JsonResponse(data = None, status = 400, safe = False)
-    elif request.method == 'POST':
+        _user = Users(username = rbody['username'], password = rbody['password'], token = random_token)
+        _user.save()
 
-        try:
-            user = Users.objects.filter(username = rbody['username'])
-        except Users.DoesNotExist:
-            user = None
+    return HttpResponse(status = 201)
+
+@csrf_exempt
+def updateUser(request):
+    """
+    Update user
+    """
+    rbody = json.loads(request.body.decode('utf-8'))
+    token = request.META.get('HTTP_TOKEN')
+    rbodyvalues = rbody.keys()
+
+    if not token:
+        return HttpResponse(status = 400)
+    
+    if "email" in rbody and not formatEmail(rbody['email']):
+        return HttpResponse(status = 400)
+    
+    try:
+        user = Users.objects.filter(token = token)
+    except Users.DoesNotExist:
+        user = None
+
+    if user:
+
+        if rbody.get('username') is not None:
+            if Users.objects.filter(username = rbody['username']).exists():
+                return HttpResponse(status = 409)
         
-        if user:
-            return HttpResponse(status = 409)
-        else:
-            while token:
-                random_token = tokenCreation()
-                token = tokenIn(random_token)
+        Users.objects.filter(token = token).update(**rbody)         
+        return HttpResponse(status = 200)
+        
+    else:
+        return HttpResponse(status = 404)
 
-            _user = Users(username = rbody['username'], password = rbody['password'], token = random_token)
-            _user.save()
-
-        return HttpResponse(status = 201)
-
+@csrf_exempt
+def deleteUser(request):
+    return
