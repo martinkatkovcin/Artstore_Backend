@@ -1,11 +1,9 @@
-from collections import UserString
 from multiprocessing.sharedctypes import Value
 from django.db import connections
 from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
 import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
-from django.core import serializers
 
 def tokenCreation():
     """
@@ -56,6 +54,9 @@ def uptime(request):
     database.execute("SELECT date_trunc('second', current_timestamp - pg_postmaster_start_time()) as uptime;")
     return JsonResponse({"pgsql": { " uptime": str(database.fetchone()[0]).replace(',', '') }})
 
+"""
+------------- USER REQUESTS -----------
+"""
 @csrf_exempt
 def createUser(request):
     """
@@ -175,17 +176,153 @@ def getInfoUser(request):
         user = None
 
     if user:
-        _user = {"firstName" : user.firstName,
-                "lastName" : user.lastName,
+        _user = {
+                "firstname" : user.firstname,
+                "lastname" : user.lastname,
                 "username" : user.username,
                 "password" : user.password,
                 "email" : user.email,
-                "phoneNumber" : user.phoneNumber,
-                "token" : user.token}
+                "phonenumber" : user.phonenumber,
+                "token" : user.token
+                }
         
         response.update(_user)
-        print(response)
         return JsonResponse(response, status = 200, safe = False)
     
+    else:
+        return HttpResponse(status = 404)
+
+"""
+------------- DELIVERY METHODS REQUESTS -----------
+"""
+@csrf_exempt
+def getDeliveryMethods(request):
+    """
+    Get all delivery methods
+    """
+    deliverymethods  = delivery_methods.objects.all()
+    arr = []
+
+    for deliverymethod in deliverymethods:
+        arr.append(
+            {"id" : deliverymethod.id,
+            "deliverymethod" : deliverymethod.deliverymethod
+            }
+        )
+    
+    return JsonResponse(arr, status = 200, safe = False)
+
+@csrf_exempt
+def getDeliveryMethod(request):
+    """
+    Get delivery method
+    """
+    id_delivery_method = request.GET.get('id', None)
+    response = {}
+    
+    try:
+        deliverymethod = delivery_methods.objects.get(id = id_delivery_method)
+    except delivery_methods.DoesNotExist:
+        deliverymethod = None
+    
+    if deliverymethod:
+        _deliverymethod = {
+            "id" : deliverymethod.id,
+            "deliverymethod" : deliverymethod.deliverymethod                
+        }
+
+        response.update(_deliverymethod)
+        return JsonResponse(response, status = 200, safe = False)
+        
+    else:
+        return HttpResponse(status = 404)
+
+"""
+------------- PAYMENT METHODS REQUESTS -----------
+"""
+@csrf_exempt
+def getPaymentMethods(request):
+    """
+    Get all payment methods
+    """
+    paymentmethods  = payment_methods.objects.all()
+    arr = []
+
+    for paymentmethod in paymentmethods:
+        arr.append(
+            {"id" : paymentmethod.id,
+            "paymentmethod" : paymentmethod.paymentmethod
+            }
+        )
+    
+    return JsonResponse(arr, status = 200, safe = False)
+
+@csrf_exempt
+def getPaymentMethod(request):
+    """
+    Get payment method
+    """
+    id_payment_method = request.GET.get('id', None)
+    response = {}
+    
+    try:
+        paymentmethod = payment_methods.objects.get(id = id_payment_method)
+    except payment_methods.DoesNotExist:
+        paymentmethod = None
+    
+    if paymentmethod:
+        _paymentmethod = {
+            "id" : paymentmethod.id,
+            "deliverymethod" : paymentmethod.paymentmethod                
+        }
+
+        response.update(_paymentmethod)
+        return JsonResponse(response, status = 200, safe = False)
+        
+    else:
+        return HttpResponse(status = 404)
+
+"""
+------------- PRODUCT CATEGORY REQUESTS -----------
+"""
+@csrf_exempt
+def getProductCategories(request):
+    """
+    Get all product categories
+    """
+    productcategories  = product_categories.objects.all()
+    arr = []
+
+    for productcategory in productcategories:
+        arr.append(
+            {"id" : productcategory.id,
+            "categoryname" : productcategory.categoryname
+            }
+        )
+    
+    return JsonResponse(arr, status = 200, safe = False)
+
+@csrf_exempt
+def getProductCategory(request):
+    """
+    Get product category
+    """
+    id_product_category = request.GET.get('id', None)
+    response = {}
+    
+    try:
+        productcategory = product_categories.objects.get(id = id_product_category)
+    except product_categories.DoesNotExist:
+        productcategory = None
+    
+    if productcategory:
+        _productcategory = {
+            "id" : productcategory.id,
+            "deliverymethod" : productcategory.categoryname                
+        }
+
+        response.update(_productcategory)
+        return JsonResponse(response, status = 200, safe = False)
+        
     else:
         return HttpResponse(status = 404)

@@ -37,7 +37,7 @@ class users(models.Model):
         
     id = models.AutoField(primary_key = True)
     firstname = models.CharField(max_length = 50, blank = True, null = True)
-    lastName = models.CharField(max_length = 50, blank = True, null = True)
+    lastname = models.CharField(max_length = 50, blank = True, null = True)
     username = models.CharField(max_length = 50, unique = True)
     password = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 254, unique = True, blank = True, null = True)
