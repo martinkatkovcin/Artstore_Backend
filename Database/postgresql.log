@@ -51,3 +51,7 @@
 	where firstName = 'Jako'
 2022-03-19 20:04:16.012 CET [27142] ERROR:  syntax error at or near "firstName" at character 1
 2022-03-19 20:04:16.012 CET [27142] STATEMENT:  firstName
+2022-03-19 20:12:23.700 CET [28826] ERROR:  relation "django_admin_log" does not exist at character 348
+2022-03-19 20:12:23.700 CET [28826] STATEMENT:  DECLARE "_django_curs_4301489536_sync_9" NO SCROLL CURSOR WITH HOLD FOR SELECT "django_admin_log"."id", "django_admin_log"."action_time", "django_admin_log"."user_id", "django_admin_log"."content_type_id", "django_admin_log"."object_id", "django_admin_log"."object_repr", "django_admin_log"."action_flag", "django_admin_log"."change_message" FROM "django_admin_log" ORDER BY "django_admin_log"."id" ASC
+2022-03-19 20:12:23.702 CET [28826] ERROR:  cursor "_django_curs_4301489536_sync_9" does not exist
+2022-03-19 20:12:23.702 CET [28826] STATEMENT:  CLOSE "_django_curs_4301489536_sync_9"

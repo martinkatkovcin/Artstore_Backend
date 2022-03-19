@@ -21,7 +21,7 @@ class vouchers(models.Model):
 
     id = models.AutoField(primary_key = True)
     code = models.CharField(max_length = 50)
-    discout = models.FloatField()
+    discount = models.FloatField()
     isactive = models.BooleanField()
 
 class payment_methods(models.Model):

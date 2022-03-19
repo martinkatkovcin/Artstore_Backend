@@ -1,0 +1,113 @@
+[
+    {
+        "model" : "apiserver.product_categories",
+        "pk" : 1,
+        "fields" : 
+        {
+            "categoryname" : "Príroda"
+        }
+    },
+
+    {
+        "model" : "apiserver.product_categories",
+        "pk" : 2,
+        "fields" : 
+        {
+            "categoryname" : "Historické obrazy"
+        }
+    },
+
+    {
+        "model" : "apiserver.product_categories",
+        "pk" : 3,
+        "fields" : 
+        {
+            "categoryname" : "Zátišia"
+        }
+    },
+
+    {
+        "model" : "apiserver.product_categories",
+        "pk" : 4,
+        "fields" : 
+        {
+            "categoryname" : "Architektúra"
+        }
+    },
+
+    {
+        "model" : "apiserver.product_categories",
+        "pk" : 5,
+        "fields" : 
+        {
+            "categoryname" : "Moderné umenie"
+        }
+    },
+
+    {
+        "model" : "apiserver.payment_methods",
+        "pk" : 1,
+        "fields" : 
+        {
+            "paymentmethod" : "Kartou"
+        }
+    },
+
+    {
+        "model" : "apiserver.payment_methods",
+        "pk" : 2,
+        "fields" : 
+        {
+            "paymentmethod" : "Hotovosť"
+        }
+    },
+
+    {
+        "model" : "apiserver.delivery_methods",
+        "pk" : 1,
+        "fields" : 
+        {
+            "deliverymethod" : "Osobný odber"
+        }
+    },
+
+    {
+        "model" : "apiserver.delivery_methods",
+        "pk" : 2,
+        "fields" : 
+        {
+            "deliverymethod" : "Poštový kurier"
+        }
+    },
+
+    {
+        "model" : "apiserver.delivery_methods",
+        "pk" : 3,
+        "fields" : 
+        {
+            "deliverymethod" : "DHL kurier"
+        }
+    },
+
+    {
+        "model" : "apiserver.vouchers",
+        "pk" : 1,
+        "fields" : 
+        {
+            "code" : "123VIANOCE",
+            "discount" : 0.2,
+            "isactive" : true
+        }
+    },
+
+    {
+        "model" : "apiserver.vouchers",
+        "pk" : 2,
+        "fields" : 
+        {
+            "code" : "VELKANOC321",
+            "discount" : 0.1,
+            "isactive" : false
+        }
+    }
+]

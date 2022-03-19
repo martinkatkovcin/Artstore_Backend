@@ -18,8 +18,8 @@ def tokenIn(token):
     Token exist or not
     """
     try:
-        _token = Users.objects.filter(token = token)
-    except Users.DoesNotExist:
+        _token = users.objects.filter(token = token)
+    except users.DoesNotExist:
         _token = None
     
     if _token:
@@ -69,8 +69,8 @@ def createUser(request):
         return HttpResponse(status = 400)
    
     try:
-        user = Users.objects.filter(username = rbody['username'])
-    except Users.DoesNotExist:
+        user = users.objects.filter(username = rbody['username'])
+    except users.DoesNotExist:
         user = None
     
     if user:
@@ -80,7 +80,7 @@ def createUser(request):
             random_token = tokenCreation()
             token = tokenIn(random_token)
 
-        _user = Users(username = rbody['username'], password = rbody['password'], token = random_token)
+        _user = users(username = rbody['username'], password = rbody['password'], token = random_token)
         _user.save()
 
     return HttpResponse(status = 201)
@@ -100,17 +100,17 @@ def updateUser(request):
         return HttpResponse(status = 400)
     
     try:
-        user = Users.objects.filter(token = token)
-    except Users.DoesNotExist:
+        user = users.objects.filter(token = token)
+    except users.DoesNotExist:
         user = None
 
     if user:
 
         if rbody.get('username') is not None:
-            if Users.objects.filter(username = rbody['username']).exists():
+            if users.objects.filter(username = rbody['username']).exists():
                 return HttpResponse(status = 409)
         
-        Users.objects.filter(token = token).update(**rbody)         
+        users.objects.filter(token = token).update(**rbody)         
         return HttpResponse(status = 200)
 
     else:
@@ -127,12 +127,12 @@ def deleteUser(request):
         return HttpResponse(status = 400)
 
     try:
-        user = Users.objects.filter(token = token)
-    except Users.DoesNotExist:
+        user = users.objects.filter(token = token)
+    except users.DoesNotExist:
         user = None
 
     if user: 
-        Users.objects.filter(token = token).delete()
+        users.objects.filter(token = token).delete()
         return HttpResponse(status = 204)
     else:
         return HttpResponse(status = 404)
@@ -149,8 +149,8 @@ def loginUser(request):
         return HttpResponse(status = 400)
 
     try:
-        user = Users.objects.get(username = rbody['username'], password = rbody['password'])
-    except Users.DoesNotExist:
+        user = users.objects.get(username = rbody['username'], password = rbody['password'])
+    except users.DoesNotExist:
         user = None
     
     if user:
@@ -170,8 +170,8 @@ def getInfoUser(request):
     response = {}
 
     try:
-        user = Users.objects.get(id = id_user)
-    except Users.DoesNotExist:
+        user = users.objects.get(id = id_user)
+    except users.DoesNotExist:
         user = None
 
     if user:
