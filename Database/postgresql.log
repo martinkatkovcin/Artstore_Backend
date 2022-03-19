@@ -23,3 +23,31 @@
 2022-03-19 13:19:53.340 CET [18595] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
 2022-03-19 13:19:53.340 CET [18595] DETAIL:  Failing row contains (null, null, null, cigan, pica, null, null, XFeAgFVAeXPKljvh).
 2022-03-19 13:19:53.340 CET [18595] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, NULL, NULL, 'cigan', 'pica', NULL, NULL, 'XFeAgFVAeXPKljvh')
+2022-03-19 19:40:59.157 CET [27142] ERROR:  relation "users" does not exist at character 15
+2022-03-19 19:40:59.157 CET [27142] STATEMENT:  SELECT * from users
+2022-03-19 19:41:03.651 CET [27142] ERROR:  relation "users" does not exist at character 15
+2022-03-19 19:41:03.651 CET [27142] STATEMENT:  SELECT * from Users
+2022-03-19 19:43:55.032 CET [27142] ERROR:  relation "users" does not exist at character 15
+2022-03-19 19:43:55.032 CET [27142] STATEMENT:  SELECT * FROM "users"
+2022-03-19 19:50:51.957 CET [27142] ERROR:  relation "users" does not exist at character 15
+2022-03-19 19:50:51.957 CET [27142] STATEMENT:  SELECT * FROM Users
+2022-03-19 19:50:55.132 CET [27142] ERROR:  syntax error at or near "Users" at character 1
+2022-03-19 19:50:55.132 CET [27142] STATEMENT:  Users
+2022-03-19 19:51:12.989 CET [27142] ERROR:  relation "users" does not exist at character 15
+2022-03-19 19:51:12.989 CET [27142] STATEMENT:  SELECT * FROM Users
+2022-03-19 20:03:26.346 CET [27142] ERROR:  column "firstname" does not exist at character 27
+2022-03-19 20:03:26.346 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
+2022-03-19 20:03:26.346 CET [27142] STATEMENT:  Select * from users where firstname = 'Peter'
+2022-03-19 20:03:30.449 CET [27142] ERROR:  syntax error at or near "firstname" at character 1
+2022-03-19 20:03:30.449 CET [27142] STATEMENT:  firstname
+2022-03-19 20:03:37.006 CET [27142] ERROR:  column "firstname" does not exist at character 27
+2022-03-19 20:03:37.006 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
+2022-03-19 20:03:37.006 CET [27142] STATEMENT:  Select * from users where firstName = 'Peter'
+2022-03-19 20:03:45.918 CET [27142] ERROR:  syntax error at or near "firstName" at character 1
+2022-03-19 20:03:45.918 CET [27142] STATEMENT:  firstName
+2022-03-19 20:04:05.686 CET [27142] ERROR:  column "firstname" does not exist at character 27
+2022-03-19 20:04:05.686 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
+2022-03-19 20:04:05.686 CET [27142] STATEMENT:  Select * from users
+	where firstName = 'Jako'
+2022-03-19 20:04:16.012 CET [27142] ERROR:  syntax error at or near "firstName" at character 1
+2022-03-19 20:04:16.012 CET [27142] STATEMENT:  firstName
