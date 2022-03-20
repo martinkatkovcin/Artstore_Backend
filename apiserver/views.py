@@ -550,3 +550,21 @@ def createOrder(request):
                     id_user_id=data['id_user'], id_voucher_id=data['id_voucher'], created=(timezone.now()))
     _order.save()
     return HttpResponse(status=200)
+
+@csrf_exempt
+def updateOrder(request, id_order):
+    """
+    Update an existing order
+    """
+    data = json.loads(request.body)
+    try:
+        order = orders.objects.filter(id=id_order)
+    except products.DoesNotExist:
+        order = None
+
+    if order:
+        orders.objects.filter(id=id_order).update(**data)
+        return HttpResponse(status=200)
+
+    else:
+        return HttpResponse(status=404)
