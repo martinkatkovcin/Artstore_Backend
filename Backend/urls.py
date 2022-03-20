@@ -24,5 +24,6 @@ urlpatterns = [
     path('product/update', views.updateProduct, name = 'updateProduct'),
     path('product/delete', views.deleteProduct, name = 'deleteProduct'),
     path('orders/<int:id_user>', views.getUsersOrders, name = 'getUserProducts'),
-    path('order/<int:id_order>', views.getSpecificOrder, name = 'getSpecificOrder')
+    path('order/<int:id_order>', views.getSpecificOrder, name = 'getSpecificOrder'),
+    path('order/create', views.createOrder, name = 'createOrder')
 ]

@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponse
 import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
+from django.utils import timezone
 
 def tokenCreation():
     """
@@ -528,3 +529,24 @@ def getSpecificOrder(request, id_order):
 
     _order = orders.objects.get(id=id_order)
     return JsonResponse(model_to_dict(_order), safe=False, status=200)
+
+@csrf_exempt
+def createOrder(request):
+    """
+    Creating new order
+    """
+
+    data = json.loads(request.body)
+    required = ['firstname', 'lastname', 'email', 'phonenumber', 'adress', 'city', 'zipcode', 'cardnumber',
+                'cardcsv', 'finished', 'id_deliverymethod', 'id_paymentmethod', 'id_user', 'id_voucher']
+
+    if not checkFilledFields(data, required):
+        return HttpResponse(status=400)
+
+    _order = orders(firstname=data['firstname'], lastname=data['lastname'], email=data['email'],
+                    phonenumber=data['phonenumber'], adress=data['adress'], city=data['city'], zipcode=data['zipcode'],
+                    cardnumber=data['cardnumber'], cardcsv=data['cardcsv'], finished=data['finished'],
+                    id_deliverymethod_id=data['id_deliverymethod'], id_paymentmethod_id=data['id_paymentmethod'],
+                    id_user_id=data['id_user'], id_voucher_id=data['id_voucher'], created=(timezone.now()))
+    _order.save()
+    return HttpResponse(status=200)
