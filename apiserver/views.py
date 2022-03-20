@@ -5,6 +5,7 @@ from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
 import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
 
 def tokenCreation():
     """
@@ -508,3 +509,14 @@ def deleteProduct(request):
         return HttpResponse(status = 204)
     else:
         return HttpResponse(status = 404)
+
+# orders requests
+def getUsersOrders(request, id_user):
+    """
+    Get all orders with user id
+    """
+    _orders = orders.objects.filter(id_user_id = id_user)
+    _orders = _orders.values('id', 'firstname', 'lastname', 'email', 'phonenumber', 'adress', 'city', 'zipcode',
+                             'cardnumber', 'cardcsv', 'finished', 'created', 'id_deliverymethod', 'id_paymentmethod',
+                             'id_user', 'id_voucher')
+    return JsonResponse(list(_orders), safe=False, status=200)
