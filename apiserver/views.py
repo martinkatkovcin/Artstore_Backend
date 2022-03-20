@@ -584,3 +584,14 @@ def createBasket(request):
     basket = order_items(created=(timezone.now()), id_order_id=data['id_order_id'], id_product_id=data['id_product_id'])
     basket.save()
     return HttpResponse(status=200)
+
+@csrf_exempt
+def deleteFromBasket(request, id_order, id_product):
+    data = order_items.objects.filter(id_order_id=id_order).filter(id_product_id=id_product)
+
+    if not data:
+        return HttpResponse(status=404)
+
+    data.delete()
+    return HttpResponse(status=200)
+
