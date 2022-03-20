@@ -520,3 +520,11 @@ def getUsersOrders(request, id_user):
                              'cardnumber', 'cardcsv', 'finished', 'created', 'id_deliverymethod', 'id_paymentmethod',
                              'id_user', 'id_voucher')
     return JsonResponse(list(_orders), safe=False, status=200)
+
+def getSpecificOrder(request, id_order):
+    """
+    Get specific user's order
+    """
+
+    _order = orders.objects.get(id=id_order)
+    return JsonResponse(model_to_dict(_order), safe=False, status=200)
