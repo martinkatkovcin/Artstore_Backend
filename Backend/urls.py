@@ -28,5 +28,6 @@ urlpatterns = [
     path('order/create', views.createOrder, name = 'createOrder'),
     path('order/update/<int:id_order>', views.updateOrder, name = 'updateOrder'),
     path('orderitems/create', views.createBasket, name = 'createBasket'),
-    path('orderitems/delete/<int:id_order>/<int:id_product>', views.deleteFromBasket, name='deleteFromBasket')
+    path('orderitems/delete/<int:id_order>/<int:id_product>', views.deleteFromBasket, name='deleteFromBasket'),
+    path('orderitems/<int:id_order>', views.getBasketContent, name= 'getBasketContent')
 ]

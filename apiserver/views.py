@@ -587,6 +587,9 @@ def createBasket(request):
 
 @csrf_exempt
 def deleteFromBasket(request, id_order, id_product):
+    """
+    Delete from basket
+    """
     data = order_items.objects.filter(id_order_id=id_order).filter(id_product_id=id_product)
 
     if not data:
@@ -594,4 +597,12 @@ def deleteFromBasket(request, id_order, id_product):
 
     data.delete()
     return HttpResponse(status=200)
+
+def getBasketContent(request, id_order):
+    """
+    Show basket content
+    """
+    content = order_items.objects.filter(id_order_id=id_order)
+    content = content.values('id_order_id', 'id_product_id')
+    return JsonResponse(list(content), safe=False, status=200)
 
