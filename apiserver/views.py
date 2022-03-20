@@ -568,3 +568,19 @@ def updateOrder(request, id_order):
 
     else:
         return HttpResponse(status=404)
+
+# order_items
+@csrf_exempt
+def createBasket(request):
+    """
+    Putting items to basket
+    """
+
+    data = json.loads(request.body)
+    required = ['id_order_id', 'id_product_id']
+    if not checkFilledFields(data, required):
+        return HttpResponse(status=400)
+
+    basket = order_items(created=(timezone.now()), id_order_id=data['id_order_id'], id_product_id=data['id_product_id'])
+    basket.save()
+    return HttpResponse(status=200)
