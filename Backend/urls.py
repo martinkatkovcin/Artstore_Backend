@@ -23,11 +23,11 @@ urlpatterns = [
     path('product/create', views.createProduct, name = 'createProduct'),
     path('product/update', views.updateProduct, name = 'updateProduct'),
     path('product/delete', views.deleteProduct, name = 'deleteProduct'),
-    path('orders/<int:id_user>', views.getUsersOrders, name = 'getUserProducts'),
-    path('order/<int:id_order>', views.getSpecificOrder, name = 'getSpecificOrder'),
+    path('orders', views.getUsersOrders, name = 'getUserProducts'),
+    path('order', views.getSpecificOrder, name = 'getSpecificOrder'),
     path('order/create', views.createOrder, name = 'createOrder'),
-    path('order/update/<int:id_order>', views.updateOrder, name = 'updateOrder'),
-    path('orderitems/create', views.createBasket, name = 'createBasket'),
-    path('orderitems/delete/<int:id_order>/<int:id_product>', views.deleteFromBasket, name='deleteFromBasket'),
-    path('orderitems/<int:id_order>', views.getBasketContent, name= 'getBasketContent')
+    path('order/update', views.updateOrder, name = 'updateOrder'),
+    path('cart/create', views.createCart, name = 'createCart'),
+    path('cart/delete', views.removeFromCart, name='removeFromCart'),
+    path('cart', views.getCartContent, name= 'getCartContent')
 ]
