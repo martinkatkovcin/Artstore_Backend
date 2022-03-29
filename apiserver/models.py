@@ -52,7 +52,7 @@ class products(models.Model):
     id_productcategory = models.ForeignKey(product_categories, on_delete = models.CASCADE)
     title = models.CharField(max_length = 50)
     description = models.CharField(max_length = 255)
-    imagepath = models.CharField(max_length = 255)
+    image = models.BinaryField()
     price = models.FloatField()
     
 class orders(models.Model):
@@ -63,7 +63,7 @@ class orders(models.Model):
     id_user = models.ForeignKey(users, on_delete = models.CASCADE)
     id_paymentmethod = models.ForeignKey(payment_methods, on_delete = models.CASCADE)
     id_deliverymethod = models.ForeignKey(delivery_methods, on_delete = models.CASCADE)
-    id_voucher = models.ForeignKey(vouchers, on_delete = models.CASCADE)
+    id_voucher = models.ForeignKey(vouchers, on_delete = models.CASCADE, null = True, blank = True)
     firstname = models.CharField(max_length = 50)
     lastname = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 254)

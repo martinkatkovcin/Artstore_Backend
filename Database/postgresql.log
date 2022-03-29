@@ -1,57 +1,12 @@
-2022-03-17 23:11:55.276 CET [97474] LOG:  starting PostgreSQL 13.6 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
-2022-03-17 23:11:55.278 CET [97474] LOG:  listening on IPv6 address "::1", port 5444
-2022-03-17 23:11:55.278 CET [97474] LOG:  listening on IPv4 address "127.0.0.1", port 5444
-2022-03-17 23:11:55.279 CET [97474] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5444"
-2022-03-17 23:11:55.283 CET [97475] LOG:  database system was shut down at 2022-03-17 23:11:55 CET
-2022-03-17 23:11:55.292 CET [97474] LOG:  database system is ready to accept connections
-2022-03-17 23:23:38.446 CET [97730] FATAL:  database "MTAAdb" does not exist
-2022-03-17 23:25:02.994 CET [97763] FATAL:  database "MTAAdb" does not exist
-2022-03-17 23:25:07.292 CET [97774] FATAL:  database "MTAAdb" does not exist
-2022-03-17 23:28:25.050 CET [97954] FATAL:  database "MTAAdb" does not exist
-2022-03-18 00:06:08.719 CET [1538] ERROR:  column "id_productCategory_id" does not exist
-2022-03-18 00:06:08.719 CET [1538] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
-2022-03-18 00:10:51.214 CET [1713] ERROR:  column "id_productCategory_id" does not exist
-2022-03-18 00:10:51.214 CET [1713] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
-2022-03-18 00:16:24.801 CET [1885] ERROR:  column "id_productCategory_id" does not exist
-2022-03-18 00:16:24.801 CET [1885] STATEMENT:  CREATE INDEX "apiserver_products_id_productCategory_id_d27ef3ba" ON "apiserver_products" ("id_productCategory_id")
-2022-03-19 13:10:23.690 CET [18267] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
-2022-03-19 13:10:23.690 CET [18267] DETAIL:  Failing row contains (null, , , cigan, pica, , , 0fX0SDmxlVZW7F8g).
-2022-03-19 13:10:23.690 CET [18267] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, '', '', 'cigan', 'pica', '', '', '0fX0SDmxlVZW7F8g')
-2022-03-19 13:12:43.827 CET [18304] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
-2022-03-19 13:12:43.827 CET [18304] DETAIL:  Failing row contains (null, , , cigan, pica, , , idazywc0oD4lE4aL).
-2022-03-19 13:12:43.827 CET [18304] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, '', '', 'cigan', 'pica', '', '', 'idazywc0oD4lE4aL')
-2022-03-19 13:19:53.340 CET [18595] ERROR:  null value in column "id" of relation "Users" violates not-null constraint
-2022-03-19 13:19:53.340 CET [18595] DETAIL:  Failing row contains (null, null, null, cigan, pica, null, null, XFeAgFVAeXPKljvh).
-2022-03-19 13:19:53.340 CET [18595] STATEMENT:  INSERT INTO "Users" ("id", "firstName", "lastName", "username", "password", "email", "phoneNumber", "token") VALUES (NULL, NULL, NULL, 'cigan', 'pica', NULL, NULL, 'XFeAgFVAeXPKljvh')
-2022-03-19 19:40:59.157 CET [27142] ERROR:  relation "users" does not exist at character 15
-2022-03-19 19:40:59.157 CET [27142] STATEMENT:  SELECT * from users
-2022-03-19 19:41:03.651 CET [27142] ERROR:  relation "users" does not exist at character 15
-2022-03-19 19:41:03.651 CET [27142] STATEMENT:  SELECT * from Users
-2022-03-19 19:43:55.032 CET [27142] ERROR:  relation "users" does not exist at character 15
-2022-03-19 19:43:55.032 CET [27142] STATEMENT:  SELECT * FROM "users"
-2022-03-19 19:50:51.957 CET [27142] ERROR:  relation "users" does not exist at character 15
-2022-03-19 19:50:51.957 CET [27142] STATEMENT:  SELECT * FROM Users
-2022-03-19 19:50:55.132 CET [27142] ERROR:  syntax error at or near "Users" at character 1
-2022-03-19 19:50:55.132 CET [27142] STATEMENT:  Users
-2022-03-19 19:51:12.989 CET [27142] ERROR:  relation "users" does not exist at character 15
-2022-03-19 19:51:12.989 CET [27142] STATEMENT:  SELECT * FROM Users
-2022-03-19 20:03:26.346 CET [27142] ERROR:  column "firstname" does not exist at character 27
-2022-03-19 20:03:26.346 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
-2022-03-19 20:03:26.346 CET [27142] STATEMENT:  Select * from users where firstname = 'Peter'
-2022-03-19 20:03:30.449 CET [27142] ERROR:  syntax error at or near "firstname" at character 1
-2022-03-19 20:03:30.449 CET [27142] STATEMENT:  firstname
-2022-03-19 20:03:37.006 CET [27142] ERROR:  column "firstname" does not exist at character 27
-2022-03-19 20:03:37.006 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
-2022-03-19 20:03:37.006 CET [27142] STATEMENT:  Select * from users where firstName = 'Peter'
-2022-03-19 20:03:45.918 CET [27142] ERROR:  syntax error at or near "firstName" at character 1
-2022-03-19 20:03:45.918 CET [27142] STATEMENT:  firstName
-2022-03-19 20:04:05.686 CET [27142] ERROR:  column "firstname" does not exist at character 27
-2022-03-19 20:04:05.686 CET [27142] HINT:  Perhaps you meant to reference the column "users.firstName".
-2022-03-19 20:04:05.686 CET [27142] STATEMENT:  Select * from users
-	where firstName = 'Jako'
-2022-03-19 20:04:16.012 CET [27142] ERROR:  syntax error at or near "firstName" at character 1
-2022-03-19 20:04:16.012 CET [27142] STATEMENT:  firstName
-2022-03-19 20:12:23.700 CET [28826] ERROR:  relation "django_admin_log" does not exist at character 348
-2022-03-19 20:12:23.700 CET [28826] STATEMENT:  DECLARE "_django_curs_4301489536_sync_9" NO SCROLL CURSOR WITH HOLD FOR SELECT "django_admin_log"."id", "django_admin_log"."action_time", "django_admin_log"."user_id", "django_admin_log"."content_type_id", "django_admin_log"."object_id", "django_admin_log"."object_repr", "django_admin_log"."action_flag", "django_admin_log"."change_message" FROM "django_admin_log" ORDER BY "django_admin_log"."id" ASC
-2022-03-19 20:12:23.702 CET [28826] ERROR:  cursor "_django_curs_4301489536_sync_9" does not exist
-2022-03-19 20:12:23.702 CET [28826] STATEMENT:  CLOSE "_django_curs_4301489536_sync_9"
+2022-03-28 17:50:40.783 CEST [1119] LOG:  starting PostgreSQL 13.6 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2022-03-28 17:50:40.785 CEST [1119] LOG:  listening on IPv6 address "::1", port 5444
+2022-03-28 17:50:40.785 CEST [1119] LOG:  listening on IPv4 address "127.0.0.1", port 5444
+2022-03-28 17:50:40.785 CEST [1119] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5444"
+2022-03-28 17:50:40.789 CEST [1120] LOG:  database system was shut down at 2022-03-28 17:50:40 CEST
+2022-03-28 17:50:40.799 CEST [1119] LOG:  database system is ready to accept connections
+2022-03-28 17:50:57.837 CEST [1166] ERROR:  relation "public.delivery_methods" does not exist at character 17
+2022-03-28 17:50:57.837 CEST [1166] STATEMENT:  SELECT t.*
+	FROM public.delivery_methods t
+	LIMIT 501
+2022-03-28 17:51:27.640 CEST [1179] ERROR:  table "django_migrations" does not exist
+2022-03-28 17:51:27.640 CEST [1179] STATEMENT:  drop table django_migrations

@@ -1,12 +1,14 @@
 from itertools import product
 from multiprocessing.sharedctypes import Value
 from django.db import connections
+from django.http import FileResponse
 from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
 import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.utils import timezone
+import base64, os
 
 def tokenCreation():
     """
@@ -48,14 +50,6 @@ def formatEmail(email):
         return True
     else:
         return False
-
-def uptime(request):
-    """
-    Uptime of database (testing request)
-    """
-    database = connections['default'].cursor()
-    database.execute("SELECT date_trunc('second', current_timestamp - pg_postmaster_start_time()) as uptime;")
-    return JsonResponse({"pgsql": { " uptime": str(database.fetchone()[0]).replace(',', '') }})
 
 """
 ------------- USER REQUESTS -----------
@@ -215,31 +209,6 @@ def getDeliveryMethods(request):
     
     return JsonResponse(arr, status = 200, safe = False)
 
-@csrf_exempt
-def getDeliveryMethod(request):
-    """
-    Get delivery method
-    """
-    id_delivery_method = request.GET.get('id', None)
-    response = {}
-    
-    try:
-        deliverymethod = delivery_methods.objects.get(id = id_delivery_method)
-    except delivery_methods.DoesNotExist:
-        deliverymethod = None
-    
-    if deliverymethod:
-        _deliverymethod = {
-            "id" : deliverymethod.id,
-            "deliverymethod" : deliverymethod.deliverymethod                
-        }
-
-        response.update(_deliverymethod)
-        return JsonResponse(response, status = 200, safe = False)
-        
-    else:
-        return HttpResponse(status = 404)
-
 """
 ------------- PAYMENT METHODS REQUESTS -----------
 """
@@ -260,30 +229,6 @@ def getPaymentMethods(request):
     
     return JsonResponse(arr, status = 200, safe = False)
 
-@csrf_exempt
-def getPaymentMethod(request):
-    """
-    Get payment method
-    """
-    id_payment_method = request.GET.get('id', None)
-    response = {}
-    
-    try:
-        paymentmethod = payment_methods.objects.get(id = id_payment_method)
-    except payment_methods.DoesNotExist:
-        paymentmethod = None
-    
-    if paymentmethod:
-        _paymentmethod = {
-            "id" : paymentmethod.id,
-            "deliverymethod" : paymentmethod.paymentmethod                
-        }
-
-        response.update(_paymentmethod)
-        return JsonResponse(response, status = 200, safe = False)
-        
-    else:
-        return HttpResponse(status = 404)
 
 """
 ------------- PRODUCT CATEGORY REQUESTS -----------
@@ -305,60 +250,28 @@ def getProductCategories(request):
     
     return JsonResponse(arr, status = 200, safe = False)
 
-@csrf_exempt
-def getProductCategory(request):
-    """
-    Get product category
-    """
-    id_product_category = request.GET.get('id', None)
-    response = {}
-    
-    try:
-        productcategory = product_categories.objects.get(id = id_product_category)
-    except product_categories.DoesNotExist:
-        productcategory = None
-    
-    if productcategory:
-        _productcategory = {
-            "id" : productcategory.id,
-            "deliverymethod" : productcategory.categoryname                
-        }
-
-        response.update(_productcategory)
-        return JsonResponse(response, status = 200, safe = False)
-        
-    else:
-        return HttpResponse(status = 404)
-
 """
 ------------- VOUCHER REQUESTS -----------
 """
 @csrf_exempt
-def getVoucher(request):
+def getVouchers(request):
     """
     Get voucher
     """
-    id_voucher = request.GET.get('id', None)
-    response = {}
+    _vouchers = vouchers.objects.all()
+    arr = []
     
-    try:
-        voucher = vouchers.objects.get(id = id_voucher)
-    except vouchers.DoesNotExist:
-        voucher = None
-    
-    if voucher:
-        _voucher = {
+    for voucher in _vouchers:
+        arr.append(
+            {
             "id" : voucher.id,
             "code" : voucher.code,
             "discount" : voucher.discount,
             "isactive" : voucher.isactive               
-        }
-
-        response.update(_voucher)
-        return JsonResponse(response, status = 200, safe = False)
-        
-    else:
-        return HttpResponse(status = 404)
+            }
+        )
+    
+    return JsonResponse(arr, status = 200, safe = False)
 
 """
 ------------- PRODUCTS REQUESTS -----------
@@ -371,50 +284,19 @@ def getProducts(request):
     _products  = products.objects.all()
     arr = []
 
+
     for product in _products:
         arr.append(
             {"id" : product.id,
             "title" : product.title,
             "description" : product.description,
-            "imagepath" : product.imagepath,
+            "image" : product.imagepath,
             "price" : product.price,
             "productcategory" : product.id_productcategory_id
             }
         )
     
     return JsonResponse(arr, status = 200, safe = False)
-
-@csrf_exempt
-def getProductsByCategory(request):
-    """
-    Get products by category
-    """
-    id_productcategory_id = request.GET.get('id_productcategory_id', None)
-    arr = []
-    
-    try:
-        _products = products.objects.filter(id_productcategory_id = id_productcategory_id)
-    except products.DoesNotExist:
-        _products = None
-    
-    if _products:
-        
-        for product in _products:
-            arr.append(
-            {
-            "id" : product.id,
-            "title" : product.title,
-            "description" : product.description,
-            "imagepath" : product.imagepath,
-            "price" : product.price,
-            "productcategory" : product.id_productcategory_id
-            })
-
-        return JsonResponse(arr, status = 200, safe = False)
-        
-    else:
-        return HttpResponse(status = 204)
-
 
 @csrf_exempt
 def getProduct(request):
@@ -435,12 +317,19 @@ def getProduct(request):
             "id" : product.id,
             "title" : product.title,
             "description" : product.description,
-            "imagepath" : product.imagepath,
+            "image" : str(product.image.tobytes()),
             "price" : product.price,
             "productcategory" : product.id_productcategory_id
             }
         
+        #print(product.image, "\n")
         response.update(_product)
+        """
+        Saving to filesystem to test if we read image right
+        """
+        with open(os.path.join('TestimagesGET', "test.jpg"), 'wb') as f:
+            f.write(product.image)
+
         return JsonResponse(_product, status = 200, safe = False)
         
     else:
@@ -451,8 +340,12 @@ def createProduct(request):
     """
     Create product
     """
-    rbody = json.loads(request.body.decode('utf-8'))
-    required = ['title', 'description', 'imagepath', 'price', 'id_productcategory_id']
+    image = request.FILES['image'].read()
+    imname = request.FILES['image'].name
+    rbody = json.loads(request.POST['json'])
+    print(rbody)
+
+    required = ['title', 'description', 'price', 'id_productcategory_id']
 
     if not checkFilledFields(rbody, required):
         return HttpResponse(status = 400)
@@ -466,9 +359,15 @@ def createProduct(request):
         return HttpResponse(status = 409)
     else:
         _product = products(title = rbody['title'], description = rbody['description'],
-                        imagepath = rbody['imagepath'], price = rbody['price'], 
+                        image = image, price = rbody['price'], 
                         id_productcategory_id = rbody['id_productcategory_id'])
         _product.save()
+
+    """
+    Saving to filesystem to test if we read image right
+    """
+    with open(os.path.join('TestimagesPOST', imname), 'wb') as f:
+        f.write(image)
 
     return HttpResponse(status = 201)
 
@@ -593,7 +492,9 @@ def updateOrder(request):
     else:
         return HttpResponse(status=404)
 
-# order_items
+"""
+------------- ORDER ITEMS REQUESTS -----------
+"""
 @csrf_exempt
 def createCart(request):
     """

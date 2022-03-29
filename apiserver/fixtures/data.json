@@ -109,5 +109,19 @@
             "discount" : 0.1,
             "isactive" : false
         }
+    },
+    {
+        "model" : "apiserver.users",
+        "pk" : 1,
+        "fields" : 
+        {
+            "firstname" : "martin",
+            "lastname" : "zuzana",
+            "username" : "admin",
+            "password" : "admin",
+            "email" : "admin@gmail.com",
+            "phonenumber" : "+421910194411",
+            "token" : "123456789ABCDEFG"
+        }
     }
 ]
