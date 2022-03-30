@@ -291,7 +291,7 @@ def getProducts(request):
             {"id" : product.id,
             "title" : product.title,
             "description" : product.description,
-            "image" : product.imagepath,
+            "image" : product.image,
             "price" : product.price,
             "productcategory" : product.id_productcategory_id
             }
