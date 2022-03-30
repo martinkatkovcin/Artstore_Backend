@@ -42,7 +42,7 @@ class users(models.Model):
     password = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 254, unique = True, blank = True, null = True)
     phonenumber = models.CharField(max_length = 50, blank = True, null = True)
-    isadmin = models.BooleanField()
+    isadmin = models.BooleanField(default = False)
     token = models.TextField()
 
 class products(models.Model):

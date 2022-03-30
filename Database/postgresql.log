@@ -13,3 +13,13 @@
 2022-03-30 08:25:31.361 CEST [13066] ERROR:  null value in column "isadmin" of relation "users" violates not-null constraint
 2022-03-30 08:25:31.361 CEST [13066] DETAIL:  Failing row contains (1, martin, zuzana, admin, admin, admin@gmail.com, +421910194411, null, 123456789ABCDEFG).
 2022-03-30 08:25:31.361 CEST [13066] STATEMENT:  INSERT INTO "users" ("id", "firstname", "lastname", "username", "password", "email", "phonenumber", "isadmin", "token") VALUES (1, 'martin', 'zuzana', 'admin', 'admin', 'admin@gmail.com', '+421910194411', NULL, '123456789ABCDEFG') RETURNING "users"."id"
+2022-03-30 11:09:23.464 CEST [16652] ERROR:  relation "users" does not exist at character 183
+2022-03-30 11:09:23.464 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq'
+2022-03-30 11:09:23.487 CEST [16652] ERROR:  relation "users" does not exist at character 183
+2022-03-30 11:09:23.487 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21
+2022-03-30 11:09:23.488 CEST [16652] ERROR:  relation "users" does not exist at character 183
+2022-03-30 11:09:23.488 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21
+2022-03-30 11:09:23.488 CEST [16652] ERROR:  relation "users" does not exist at character 183
+2022-03-30 11:09:23.488 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21
+2022-03-30 11:09:23.489 CEST [16652] ERROR:  relation "users" does not exist at character 183
+2022-03-30 11:09:23.489 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21

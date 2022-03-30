@@ -89,7 +89,7 @@ def updateUser(request):
     Update user
     """
     rbody = json.loads(request.body.decode('utf-8'))
-    token = request.META.get('HTTP_TOKEN')
+    token = request.GET['token']
 
     if not token:
         return HttpResponse(status = 400)
@@ -110,7 +110,6 @@ def updateUser(request):
         
         users.objects.filter(token = token).update(**rbody)         
         return HttpResponse(status = 200)
-
     else:
         return HttpResponse(status = 404)
 
@@ -119,7 +118,7 @@ def deleteUser(request):
     """
     Delete user
     """
-    token = request.META.get('HTTP_TOKEN')
+    token = request.GET['token']
 
     if not token: 
         return HttpResponse(status = 400)
@@ -422,7 +421,7 @@ def deleteProduct(request):
     else:
         return HttpResponse(status = 404)
 
-
+# orders requests
 def getUsersOrders(request):
     """
     Get all orders with user id
