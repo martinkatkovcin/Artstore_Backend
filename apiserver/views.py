@@ -363,18 +363,21 @@ def createProduct(request):
     if product:
         return HttpResponse(status = 409)
     else:
-        _product = products(title = rbody['title'], description = rbody['description'],
-                        image = image, price = rbody['price'], 
-                        id_productcategory_id = rbody['id_productcategory_id'])
-        _product.save()
+        if request.GET['isadmin'] == 'True':
+            _product = products(title = rbody['title'], description = rbody['description'],
+                            image = image, price = rbody['price'], 
+                            id_productcategory_id = rbody['id_productcategory_id'])
+            _product.save()     
+            """
+            Saving to filesystem to test if we read image right
+            """
+            with open(os.path.join('TestimagesPOST', imname), 'wb') as f:
+                f.write(image)
+            
+            return HttpResponse(status = 201)
+        else:
+            return HttpResponse(status = 401)
 
-    """
-    Saving to filesystem to test if we read image right
-    """
-    with open(os.path.join('TestimagesPOST', imname), 'wb') as f:
-        f.write(image)
-
-    return HttpResponse(status = 201)
 
 @csrf_exempt
 def updateProduct(request):
@@ -390,10 +393,11 @@ def updateProduct(request):
         product = None
 
     if product:
-
-        products.objects.filter(id = id_product).update(**rbody)         
-        return HttpResponse(status = 200)
-
+        if request.GET['isadmin'] == 'True':
+            products.objects.filter(id = id_product).update(**rbody)         
+            return HttpResponse(status = 200)
+        else:
+            return HttpResponse(status = 401)
     else:
         return HttpResponse(status = 404)
 
@@ -410,12 +414,15 @@ def deleteProduct(request):
         product = None
 
     if product: 
-        products.objects.filter(id = id_product).delete()
-        return HttpResponse(status = 204)
+        if request.GET['isadmin'] == 'True':
+            products.objects.filter(id = id_product).delete()
+            return HttpResponse(status = 204)
+        else:
+            return HttpResponse(status = 401)
     else:
         return HttpResponse(status = 404)
 
-# orders requests
+
 def getUsersOrders(request):
     """
     Get all orders with user id
