@@ -42,6 +42,7 @@ class users(models.Model):
     password = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 254, unique = True, blank = True, null = True)
     phonenumber = models.CharField(max_length = 50, blank = True, null = True)
+    isadmin = models.BooleanField()
     token = models.TextField()
 
 class products(models.Model):
@@ -54,6 +55,7 @@ class products(models.Model):
     description = models.CharField(max_length = 255)
     image = models.BinaryField()
     price = models.FloatField()
+    created = models.DateTimeField(auto_now_add = True)
     
 class orders(models.Model):
     class Meta:

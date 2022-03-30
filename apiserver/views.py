@@ -78,7 +78,7 @@ def createUser(request):
             random_token = tokenCreation()
             token = tokenIn(random_token)
 
-        _user = users(username = rbody['username'], password = rbody['password'], token = random_token)
+        _user = users(username = rbody['username'], password = rbody['password'], token = random_token, isadmin = False)
         _user.save()
 
     return HttpResponse(status = 201)
@@ -154,7 +154,8 @@ def loginUser(request):
     if user:
         return JsonResponse({"token" : user.token, 
                             "username" : user.username, 
-                            "password" : user.password}, status = 200, safe = False)
+                            "password" : user.password,
+                            "isadmin" : user.isadmin}, status = 200, safe = False)
     else:
         return HttpResponse(status = 404)
     

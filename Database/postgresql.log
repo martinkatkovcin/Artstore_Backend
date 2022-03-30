@@ -10,3 +10,6 @@
 	LIMIT 501
 2022-03-28 17:51:27.640 CEST [1179] ERROR:  table "django_migrations" does not exist
 2022-03-28 17:51:27.640 CEST [1179] STATEMENT:  drop table django_migrations
+2022-03-30 08:25:31.361 CEST [13066] ERROR:  null value in column "isadmin" of relation "users" violates not-null constraint
+2022-03-30 08:25:31.361 CEST [13066] DETAIL:  Failing row contains (1, martin, zuzana, admin, admin, admin@gmail.com, +421910194411, null, 123456789ABCDEFG).
+2022-03-30 08:25:31.361 CEST [13066] STATEMENT:  INSERT INTO "users" ("id", "firstname", "lastname", "username", "password", "email", "phonenumber", "isadmin", "token") VALUES (1, 'martin', 'zuzana', 'admin', 'admin', 'admin@gmail.com', '+421910194411', NULL, '123456789ABCDEFG') RETURNING "users"."id"
