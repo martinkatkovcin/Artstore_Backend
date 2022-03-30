@@ -284,18 +284,23 @@ def getProducts(request):
     """
     _products  = products.objects.all()
     arr = []
-
+    counter = 1
 
     for product in _products:
         arr.append(
             {"id" : product.id,
             "title" : product.title,
             "description" : product.description,
-            "image" : product.image,
+            "image" : str(product.image.tobytes()),
             "price" : product.price,
             "productcategory" : product.id_productcategory_id
             }
         )
+
+        with open(os.path.join('Testimagesproducts', str(counter) + '.jpg'), 'wb') as f:
+            f.write(product.image)
+        
+        counter = counter + 1
     
     return JsonResponse(arr, status = 200, safe = False)
 
@@ -344,7 +349,6 @@ def createProduct(request):
     image = request.FILES['image'].read()
     imname = request.FILES['image'].name
     rbody = json.loads(request.POST['json'])
-    print(rbody)
 
     required = ['title', 'description', 'price', 'id_productcategory_id']
 
