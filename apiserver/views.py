@@ -2,6 +2,7 @@ from itertools import product
 from multiprocessing.sharedctypes import Value
 from django.db import connections
 from django.http import FileResponse
+from numpy import empty
 from apiserver.models import *
 from django.http import JsonResponse, HttpResponse
 import json, random, string, re
@@ -34,9 +35,13 @@ def checkFilledFields(rbody, required):
     """
     Check, if user filled every required field
     """
-    for element in required:
-        if element not in rbody:
+    try:
+        if rbody.get('username') == '' or rbody.get('password') == '':
             return False
+    except:
+        for element in required:
+            if element not in rbody:
+                return False
     
     return True
 
@@ -154,7 +159,8 @@ def loginUser(request):
         return JsonResponse({"token" : user.token, 
                             "username" : user.username, 
                             "password" : user.password,
-                            "isadmin" : user.isadmin}, status = 200, safe = False)
+                            "isadmin" : user.isadmin}
+                            , status = 200, safe = False)
     else:
         return HttpResponse(status = 404)
     
@@ -164,11 +170,11 @@ def getInfoUser(request):
     """
     Info user
     """
-    id_user = request.GET.get('id', None)
+    id_user = request.GET.get('token', None)
     response = {}
 
     try:
-        user = users.objects.get(id = id_user)
+        user = users.objects.get(token = id_user)
     except users.DoesNotExist:
         user = None
 
@@ -475,7 +481,7 @@ def createOrder(request):
 
     if not checkFilledFields(data, required):
         return HttpResponse(status=400)
-
+    
     _order = orders(firstname=data['firstname'], lastname=data['lastname'], email=data['email'],
                     phonenumber=data['phonenumber'], adress=data['adress'], city=data['city'], zipcode=data['zipcode'],
                     cardnumber=data['cardnumber'], cardcsv=data['cardcsv'], finished=data['finished'],
@@ -562,4 +568,3 @@ def getCartContent(request):
         return JsonResponse(list(content), safe=False, status=200)
 
     return HttpResponse(status=404)
-

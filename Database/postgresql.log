@@ -23,3 +23,38 @@
 2022-03-30 11:09:23.488 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21
 2022-03-30 11:09:23.489 CEST [16652] ERROR:  relation "users" does not exist at character 183
 2022-03-30 11:09:23.489 CEST [16652] STATEMENT:  SELECT "users"."id", "users"."firstname", "users"."lastname", "users"."username", "users"."password", "users"."email", "users"."phonenumber", "users"."isadmin", "users"."token" FROM "users" WHERE "users"."username" = 'qqq' LIMIT 21
+2022-03-30 12:13:30.662 CEST [18642] ERROR:  integer out of range
+2022-03-30 12:13:30.662 CEST [18642] STATEMENT:  INSERT INTO "orders" ("id_user_id", "id_paymentmethod_id", "id_deliverymethod_id", "id_voucher_id", "firstname", "lastname", "email", "phonenumber", "adress", "city", "zipcode", "cardnumber", "cardexpirationdate", "cardcsv", "finished", "created") VALUES (1, 1, 2, 2, 'Martin', 'Katkovcin', 'katkovcin@gmail.com', '+421910194444', 'Hlavna 306', 'Banska Bystrica', 85131, 5123123123, '', 92, false, '2022-03-30T10:13:30.657921+00:00'::timestamptz) RETURNING "orders"."id"
+2022-03-30 12:13:48.761 CEST [18650] ERROR:  integer out of range
+2022-03-30 12:13:48.761 CEST [18650] STATEMENT:  INSERT INTO "orders" ("id_user_id", "id_paymentmethod_id", "id_deliverymethod_id", "id_voucher_id", "firstname", "lastname", "email", "phonenumber", "adress", "city", "zipcode", "cardnumber", "cardexpirationdate", "cardcsv", "finished", "created") VALUES (1, 1, 2, 2, 'Martin', 'Katkovcin', 'katkovcin@gmail.com', '+421910194444', 'Hlavna 306', 'Banska Bystrica', 851, 5123123123, '', 92, false, '2022-03-30T10:13:48.759567+00:00'::timestamptz) RETURNING "orders"."id"
+2022-03-30 12:14:15.090 CEST [18660] ERROR:  integer out of range
+2022-03-30 12:14:15.090 CEST [18660] STATEMENT:  INSERT INTO "orders" ("id_user_id", "id_paymentmethod_id", "id_deliverymethod_id", "id_voucher_id", "firstname", "lastname", "email", "phonenumber", "adress", "city", "zipcode", "cardnumber", "cardexpirationdate", "cardcsv", "finished", "created") VALUES (1, 1, 2, 2, 'Martin', 'Katkovcin', 'katkovcin@gmail.com', '+421910194444', 'Hlavna 306', 'Banska Bystrica', 851, 5123123123, '', 92, false, '2022-03-30T10:14:15.088302+00:00'::timestamptz) RETURNING "orders"."id"
+2022-03-30 12:28:28.761 CEST [19243] ERROR:  insert or update on table "order_items" violates foreign key constraint "order_items_id_product_id_f93a03d7_fk_products_id"
+2022-03-30 12:28:28.761 CEST [19243] DETAIL:  Key (id_product_id)=(2) is not present in table "products".
+2022-03-30 12:28:28.761 CEST [19243] STATEMENT:  INSERT INTO "order_items" ("id_product_id", "id_order_id", "created") VALUES (2, 1, '2022-03-30T10:28:28.754003+00:00'::timestamptz) RETURNING "order_items"."id"
+2022-03-31 14:52:48.609 CEST [1119] LOG:  received fast shutdown request
+2022-03-31 14:52:48.609 CEST [1119] LOG:  aborting any active transactions
+2022-03-31 14:52:48.612 CEST [1119] LOG:  background worker "logical replication launcher" (PID 1126) exited with exit code 1
+2022-03-31 14:52:48.613 CEST [1121] LOG:  shutting down
+2022-03-31 14:52:48.623 CEST [1119] LOG:  database system is shut down
+2022-04-09 17:54:44.401 CEST [48538] LOG:  starting PostgreSQL 13.6 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2022-04-09 17:54:44.404 CEST [48538] LOG:  listening on IPv6 address "::1", port 5444
+2022-04-09 17:54:44.404 CEST [48538] LOG:  listening on IPv4 address "127.0.0.1", port 5444
+2022-04-09 17:54:44.404 CEST [48538] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5444"
+2022-04-09 17:54:44.409 CEST [48539] LOG:  database system was shut down at 2022-03-31 14:52:48 CEST
+2022-04-09 17:54:44.420 CEST [48538] LOG:  database system is ready to accept connections
+2022-04-10 23:26:37.694 CEST [87226] ERROR:  null value in column "isadmin" of relation "users" violates not-null constraint
+2022-04-10 23:26:37.694 CEST [87226] DETAIL:  Failing row contains (2, null, null, skuska1, skuska2, null, null, null, null).
+2022-04-10 23:26:37.694 CEST [87226] STATEMENT:  INSERT INTO users (username, password) VALUES ('skuska1', 'skuska2')
+2022-04-10 23:27:41.518 CEST [87226] ERROR:  INSERT has more expressions than target columns at character 70
+2022-04-10 23:27:41.518 CEST [87226] STATEMENT:  INSERT INTO users (username, password) VALUES ('skuska1', 'skuska2', false)
+2022-04-13 00:18:13.842 CEST [48538] LOG:  received smart shutdown request
+2022-04-13 00:18:13.856 CEST [48538] LOG:  background worker "logical replication launcher" (PID 48545) exited with exit code 1
+2022-04-13 00:18:13.861 CEST [48540] LOG:  shutting down
+2022-04-13 00:18:13.896 CEST [48538] LOG:  database system is shut down
+2022-04-13 09:56:30.359 CEST [48963] LOG:  starting PostgreSQL 13.6 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 11.0.3 (clang-1103.0.32.62), 64-bit
+2022-04-13 09:56:30.361 CEST [48963] LOG:  listening on IPv6 address "::1", port 5444
+2022-04-13 09:56:30.361 CEST [48963] LOG:  listening on IPv4 address "127.0.0.1", port 5444
+2022-04-13 09:56:30.362 CEST [48963] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5444"
+2022-04-13 09:56:30.366 CEST [48964] LOG:  database system was shut down at 2022-04-13 00:18:13 CEST
+2022-04-13 09:56:30.376 CEST [48963] LOG:  database system is ready to accept connections
