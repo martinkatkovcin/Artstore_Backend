@@ -9,7 +9,7 @@ import json, random, string, re
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.utils import timezone
-import base64, os
+import base64, os, ctypes
 
 def tokenCreation():
     """
@@ -302,8 +302,8 @@ def getProducts(request):
             }
         )
 
-        with open(os.path.join('Testimagesproducts', str(counter) + '.jpg'), 'wb') as f:
-            f.write(product.image)
+        # with open(os.path.join('Testimagesproducts', str(counter) + '.jpg'), 'wb') as f:
+        #     f.write(product.image)
         
         counter = counter + 1
     
@@ -352,6 +352,7 @@ def createProduct(request):
     Create product
     """
     image = request.FILES['image'].read()
+    basestr = base64.b64encode(image)
     imname = request.FILES['image'].name
     rbody = json.loads(request.POST['json'])
 
@@ -370,7 +371,7 @@ def createProduct(request):
     else:
         if request.GET['isadmin'] == 'True':
             _product = products(title = rbody['title'], description = rbody['description'],
-                            image = image, price = rbody['price'], 
+                            image = basestr, price = rbody['price'], 
                             id_productcategory_id = rbody['id_productcategory_id'])
             _product.save()     
             """
