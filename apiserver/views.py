@@ -353,7 +353,7 @@ def createProduct(request):
     """
     image = request.FILES['image'].read()
     imname = request.FILES['image'].name
-    rbody = json.loads(request.POST['json'])
+    rbody = request.POST.dict()
 
     required = ['title', 'description', 'price', 'id_productcategory_id']
 
