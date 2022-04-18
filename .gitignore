@@ -2,6 +2,8 @@
 *.log
 *.pot
 *.pyc
+Backend/__pycache__/
+apiserver/__pycache__/
 __pycache__/
 local_settings.py
 db.sqlite3
