@@ -264,6 +264,14 @@ def getVouchers(request):
     """
     Get voucher
     """
+    given_voucher = request.GET.get('voucher', None)
+    #print(given_voucher)
+    try:
+        voucher = vouchers.objects.get(code=given_voucher)
+        return JsonResponse({"discount": voucher.discount}, status=200, safe=False)
+    except vouchers.DoesNotExist:
+        return HttpResponse(status = 404)
+
     _vouchers = vouchers.objects.all()
     arr = []
     
