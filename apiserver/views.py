@@ -11,6 +11,13 @@ from django.forms.models import model_to_dict
 from django.utils import timezone
 import base64, os, ctypes
 
+from django.shortcuts import render
+
+def main_view(request):
+    context = {}
+
+    return render(request, 'apiserver/main.html', context=context)
+
 def tokenCreation():
     """
     Creation of unique token assigned to user
@@ -338,8 +345,8 @@ def getProduct(request):
         """
         Saving to filesystem to test if we read image right
         """
-        with open(os.path.join('TestimagesGET', "test.jpg"), 'wb') as f:
-            f.write(product.image)
+        # with open(os.path.join('TestimagesGET', "test.jpg"), 'wb') as f:
+        #     f.write(product.image)
 
         return JsonResponse(_product, status = 200, safe = False)
         

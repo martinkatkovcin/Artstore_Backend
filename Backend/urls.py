@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from apiserver import views
 
 urlpatterns = [
@@ -23,5 +23,7 @@ urlpatterns = [
     path('order/update', views.updateOrder, name = 'updateOrder'),
     path('cart/create', views.createCart, name = 'createCart'),
     path('cart/delete', views.removeFromCart, name='removeFromCart'),
-    path('cart', views.getCartContent, name= 'getCartContent')
-]
+    path('cart', views.getCartContent, name= 'getCartContent'),
+
+     path('', include('apiserver.urls')),
+    ]
