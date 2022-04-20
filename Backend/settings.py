@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-64wi4_v5xr%&op)fd^q*jnlz2i8#@0hbr!$uv4ow2b6wz&zwwg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.10.12.207', '147.175.162.86']
 
 
 # Application definition
@@ -129,6 +129,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import os
-ASGI_APPLICATION = 'Backend.asgi.application'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# import os
+# ASGI_APPLICATION = 'Backend.asgi.application'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

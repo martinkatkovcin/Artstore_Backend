@@ -24,6 +24,4 @@ urlpatterns = [
     path('cart/create', views.createCart, name = 'createCart'),
     path('cart/delete', views.removeFromCart, name='removeFromCart'),
     path('cart', views.getCartContent, name= 'getCartContent'),
-
-     path('', include('apiserver.urls')),
     ]
